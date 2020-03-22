@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 class App extends React.Component{
@@ -8,33 +7,17 @@ class App extends React.Component{
     this.state = {
       loaded : false
     }
+    this.word = this.word.bind(this)
   }
 
-
-  async componentDidMount(){
-    const response = await fetch("https://randomuser.me/api/")
-    const data = await response.json()
-
-
-    this.setState({
-      loaded : true,
-      firstName : data.results[0].name.first,
-      lastName : data.results[0].name.last,
-      image : data.results[0].picture.large,
-    })
-  }
-
-  async generate(){
-    const response = await fetch("https://randomuser.me/api/")
-    const data = await response.json()
-    console.log(data)
-    this.setState({
-      loaded : true,
-      firstName : data.results[0].name.first,
-      lastName : data.results[0].name.last,
-      image : data.results[0].picture.large,
-
-    })
+  componentDidMount(){
+    const node = document.getElementsByClassName("input")[0];
+    console.log(node)
+    node.addEventListener("keyup", (event) => {
+        if (event.key === "Enter") {
+          this.word()
+        }
+    });
   }
 
   async word(){
@@ -45,29 +28,28 @@ class App extends React.Component{
     const data = await response.json()
 
     console.log(data)
+    const results = []
+
+    for (var i = 0; i < data.length; i++){
+      results.push(data[i].word)
+    }
+    console.log(results)
+    this.setState({
+      words: results
+    })
   }
 
   render(){
     return (
-      <div className="App" style={{display: "flex", justifyContent: "space-evenly"}}>
-        <div>
-          <div> 
-            {!this.state.loaded ? 
-            <div>Loading...</div> 
-            : 
-            <div>
-              <div>{this.state.firstName}</div>
-              <div>{this.state.lastName}</div>
-              <img src={this.state.image}></img>
-            </div>
-            }
+      <div className="App" >
+        <div style={{display: "flex", justifyContent: "center", flexDirection: "column", alignItems : "center"}}>
+          <div style={{display: "flex", width: "80%", flexWrap: "wrap"}}>
+            {this.state.words ? this.state.words.map((word, key) => <div key={key} style={{margin: "10px"}}>{word}</div>) : null}
           </div>
-          <button onClick={() => this.generate()}>Generate</button>
-        </div>
-        <div>
-          {this.state.words}
-          <button onClick={() => this.word()}>Find</button>
-          <input type='text' className="input"></input>
+          <div>
+            <button onClick={() => this.word()}>Find</button>
+            <input type='text' className="input"></input>
+          </div>
         </div>
       </div>
     );
