@@ -1,8 +1,119 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
 .App {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  align-items: center;
+}
+
+.content-div{
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  height: 100vh
+}
+
+.input-div{
+  width: 500px;
+  display: flex;
+}
+.input{
+  margin: 0px;
+  padding: 0px;
+  height: 40px;
+  font-size: 24px;
+}
+.input:focus + .suggested-div{
+  display: flex
+}
+
+.suggested-div:hover{
+  display: flex;
+}
+
+.btn{
+  height: 40px;
+  margin-right: 10px;
+}
+
+.form-control:focus {
+  border-color: none;
+  outline: none;
+  box-shadow: none;
+}
+.btn:focus{
+  border-color: none;
+  outline: none;
+  box-shadow: none;
+}
+
+
+.suggested-div{
+  display: none;
+  width: 100%;
+  position: relative;
+}
+.suggested-list{
+  width: 99%;
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  position: absolute;
+}
+
+.suggested-li{
+  height: 40px;
+
+  background: lightgrey;
+  outline: 1px solid black;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+}
+
+.suggested-li:hover{
+  cursor: pointer;
+  background: grey;
+}
+
+.text-input{
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: center;
+}
+
+.title-div{
+  height: 100px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  font-size: 40px;
+  font-family: 'Montserrat', sans-serif;
+  align-items: center;
+  margin: 20px;
+}
+.footer-div{
+  height: 80px;
+  width: 100%;
+  align-self: flex-end;
+  background: lightblue;
+}
+
+.filler-div{
+  flex: 1;
+}
+
+.words-div{
+  margin-top: 60px;
+  display: flex;
+  width: 80%;
+  flex-wrap: wrap;
+  justify-content: center;
 }
