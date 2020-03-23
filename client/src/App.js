@@ -45,6 +45,14 @@ class App extends React.Component{
     const data = await response.json()
 
     console.log(data)
+    const wordss = []
+    var i;
+    for (i = 0; i < data.length; i++){
+      wordss.push(<div style={{margin: "10px"}}>{data[i].word}</div>)
+    }
+    this.setState({
+      words : [wordss]
+    })
   }
 
   render(){
@@ -64,10 +72,20 @@ class App extends React.Component{
           </div>
           <button onClick={() => this.generate()}>Generate</button>
         </div>
-        <div>
-          {this.state.words}
-          <button onClick={() => this.word()}>Find</button>
-          <input type='text' className="input"></input>
+        <div style={{width : "400px", display: "flex", flexDirection: "column"}}>
+          <div>
+            <button onClick={() => this.word()}>Find</button>
+            <input type='text' className="input"></input>
+          </div>
+
+          <div style={{width: "400px", display: "flex", flexWrap: "wrap"}}>
+            {this.state.words ? 
+
+            this.state.words
+            : 
+            <div></div>
+            }
+          </div>
         </div>
       </div>
     );
