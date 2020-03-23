@@ -20,7 +20,36 @@ class App extends React.Component{
             this.word()
           }
         }
+        if (event.key === "ArrowDown") {
+          if (this.state.selected === null){
+            this.setState({
+              selected : 0
+            })
+            node.value = document.getElementsByClassName("suggested-list")[0].childNodes[this.state.selected].textContent
+          }
+          else if (this.state.selected < this.state.suggested.length - 1){
+            this.setState( (prevState) => {
+              return({selected : prevState.selected + 1})
+            })
+            console.log(this.state.selected)
+            node.value = document.getElementsByClassName("suggested-list")[0].childNodes[this.state.selected].textContent
+
+          }
+        }
+        if (event.key === "ArrowUp"){
+          if (this.state.selected > 0){
+            this.setState((prevState) => {
+              return({selected : prevState.selected - 1})
+            })
+            console.log(this.state.selected)
+          }
+          node.value = document.getElementsByClassName("suggested-list")[0].childNodes[this.state.selected].textContent
+
+
+        }
     });
+    console.log(this.state.selected)
+    
   }
 
   async word(){
@@ -46,7 +75,8 @@ class App extends React.Component{
       this.setState({
         words: results,
         suggested : null,
-        loading : false
+        loading : false,
+        selected : null
       })
 
       document.getElementsByClassName("input")[0].value = ""
