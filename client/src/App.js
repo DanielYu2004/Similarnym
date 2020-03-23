@@ -31,7 +31,6 @@ class App extends React.Component{
             this.setState( (prevState) => {
               return({selected : prevState.selected + 1})
             })
-            console.log(this.state.selected)
             node.value = document.getElementsByClassName("suggested-list")[0].childNodes[this.state.selected].textContent
 
           }
