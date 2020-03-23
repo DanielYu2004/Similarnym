@@ -69,8 +69,7 @@
 .suggested-li{
   height: 40px;
 
-  background: lightgrey;
-  outline: 1px solid black;
+  background: #e4eaf5;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -79,7 +78,7 @@
 
 .suggested-li:hover{
   cursor: pointer;
-  background: grey;
+  background: #ccd6e8;
 }
 
 .text-input{
@@ -116,4 +115,8 @@
   width: 80%;
   flex-wrap: wrap;
   justify-content: center;
+}
+
+.li-word{
+  margin-left: 5px;
 }

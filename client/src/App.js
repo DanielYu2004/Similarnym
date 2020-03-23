@@ -70,7 +70,7 @@ class App extends React.Component{
       })
     }
     else{
-      const response = await fetch("https://api.datamuse.com/sug?s=" + text)
+      const response = await fetch("https://api.datamuse.com/sug?max=8&s=" + text)
       const data = await response.json()
       console.log(data)
   
@@ -99,7 +99,14 @@ class App extends React.Component{
                 <input type='text' className="input form-control" placeholder="Search a word" onInput={ () => this.inputChange()}></input>
                 <div className="suggested-div">
                   <ul className="suggested-list"> 
-                    {this.state.suggested ? this.state.suggested.map((word,key) => <li key={key}className="suggested-li" onClick={(e) => this.suggested(e)}>{word}</li>) : null}
+                    {this.state.suggested ? this.state.suggested.map((word,key) => 
+                    {if (key == this.state.suggested.length-1){
+                    return <li style={{borderRadius: "0 0 7px 7px"}}key={key}className="suggested-li" onClick={(e) => this.suggested(e)}><div className="li-word">{word}</div></li>
+                    }
+                    else{
+                    return <li key={key}className="suggested-li" onClick={(e) => this.suggested(e)}><div className="li-word">{word}</div></li>
+                    }
+                    }) : null}
                   </ul>
                 </div>
               </div>
