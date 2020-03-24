@@ -149,7 +149,7 @@ class App extends React.Component{
       })
     }
     else{
-      const response = await fetch("https://api.datamuse.com/sug?max=8&s=" + text)
+      const response = await fetch("https://cors-anywhere.herokuapp.com/https://api.datamuse.com/sug?max=8&s=" + text)
       const data = await response.json()
       //console.log(data)
   
