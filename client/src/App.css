@@ -141,8 +141,17 @@
   .words-div{
     width: 80%;
   }
+  .input{
+    font-size: 16px;
+  }
+  .word-syn{
+    margin: 9px;
+  }
 }
 
+.word-syn{
+  margin: 13px;
+}
 .word-syn:hover{
   cursor: pointer;
 }

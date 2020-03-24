@@ -206,7 +206,7 @@ class App extends React.Component{
 
           <div className="words-div">
             {this.state.word ? <div className="definition-div"><div>{this.state.word}</div><div className="definition">{this.state.definition}</div></div>: null}  
-            {this.state.words  && !this.state.loading ? this.state.words.map((word, key) => <div className="word-syn" onClick={(e) => this.suggested(e)} key={key} style={{margin: "13px"}}>{word}</div>) : (this.state.loading ? <div> Loading... </div>: null)}
+            {this.state.words  && !this.state.loading ? this.state.words.map((word, key) => <div className="word-syn" onClick={(e) => this.suggested(e)} key={key}>{word}</div>) : (this.state.loading ? <div> Loading... </div>: null)}
           </div>
         </div>     
         <div className="filler-div"></div>
