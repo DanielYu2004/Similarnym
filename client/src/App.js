@@ -211,7 +211,8 @@ class App extends React.Component{
         </div>     
         <div className="filler-div"></div>
         <div className="footer-div">
-          footer
+        Daniel Yu<br></br>
+Developed as a side project
         </div>
       </div>
     );
