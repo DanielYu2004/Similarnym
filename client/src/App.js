@@ -180,7 +180,7 @@ class App extends React.Component{
       <div className="App" >
         <div className="content-div">
           <div class="title-div">
-            <div onClick={() => this.reset()} className="title">Similarnyms</div>
+            <div onClick={() => this.reset()} className="title">Similarnym</div>
             <div className="subtitle">similar meanings with similar applications</div>
 
           </div>
