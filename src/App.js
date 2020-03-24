@@ -90,7 +90,7 @@ class App extends React.Component{
         definition: null
       })
       //console.log("sending word:" , word)
-      const url = "http://cors-anywhere.herokuapp.com/http://api.datamuse.com/words?max=70&ml=" + word
+      const url = "https://cors-anywhere.herokuapp.com/https://api.datamuse.com/words?max=70&ml=" + word
       const response = await fetch(url)
       const data = await response.json()
   
@@ -103,7 +103,7 @@ class App extends React.Component{
 
 
 
-      const responsee = await fetch("http://www.dictionaryapi.com/api/v3/references/collegiate/json/" + word +"?key=7e6d05cf-f2ff-4571-bcdc-c93c05e8a98b")
+      const responsee = await fetch("https://www.dictionaryapi.com/api/v3/references/collegiate/json/" + word +"?key=7e6d05cf-f2ff-4571-bcdc-c93c05e8a98b")
       const dataa = await responsee.json()
       //console.log(dataa)
       
@@ -149,7 +149,7 @@ class App extends React.Component{
       })
     }
     else{
-      const response = await fetch("http://api.datamuse.com/sug?max=8&s=" + text)
+      const response = await fetch("https://api.datamuse.com/sug?max=8&s=" + text)
       const data = await response.json()
       //console.log(data)
   
