@@ -7,14 +7,13 @@ class App extends React.Component{
     this.state = {
       loading : false,
       suggested : [],
-      selected : null
+      selected : null, 
+      word : null
     }
     this.word = this.word.bind(this)
   }
 
   componentDidMount(){
-
-
     const node = document.getElementsByClassName("input")[0];
     node.addEventListener("keyup", (event) => {
         if (event.key === "Enter") {
@@ -36,7 +35,6 @@ class App extends React.Component{
               this.setState( (prevState) => {
                 return({selected : prevState.selected + 1})
               })
-              console.log(this.state.selected)
               node.value = document.getElementsByClassName("suggested-list")[0].childNodes[this.state.selected].textContent
   
             }
@@ -50,7 +48,6 @@ class App extends React.Component{
               this.setState((prevState) => {
                 return({selected : prevState.selected - 1})
               })
-              console.log(this.state.selected)
               node.value = document.getElementsByClassName("suggested-list")[0].childNodes[this.state.selected].textContent
             }
             else if (this.state.suggested.length <= this.state.selected){
@@ -64,7 +61,6 @@ class App extends React.Component{
 
             }
           }
-          console.log("selected", this.state.selected)
           if (this.state.selected !== null){            
             for (var i = 0; i < this.state.suggested.length; i++){
               document.getElementsByClassName("suggested-list")[0].childNodes[i].classList.remove("selected");
@@ -89,7 +85,9 @@ class App extends React.Component{
     if (word != ""){
       this.setState({
         suggested: [], 
-        loading: true
+        loading: true,
+        word : null,
+        definition: null
       })
       console.log("sending word:" , word)
       const url = "https://cors-anywhere.herokuapp.com/https://api.datamuse.com/words?max=70&ml=" + word
@@ -103,11 +101,29 @@ class App extends React.Component{
         results.push(data[i].word)
       }
 
+
+
+      const responsee = await fetch("https://www.dictionaryapi.com/api/v3/references/collegiate/json/" + word +"?key=7e6d05cf-f2ff-4571-bcdc-c93c05e8a98b")
+      const dataa = await responsee.json()
+      console.log(dataa)
+      
+      var definition = "unavailable"
+      if (dataa[0] != undefined){
+        if (dataa[0].shortdef != undefined){
+          var definition = dataa[0].shortdef[0] 
+        }
+      }
+
+
+
+
       this.setState({
         words: results,
         suggested : [],
         loading : false,
-        selected : null
+        selected : null,
+        word: word,
+        definition: definition
       })
 
       document.getElementsByClassName("input")[0].value = ""
@@ -121,6 +137,7 @@ class App extends React.Component{
     this.word()
 
   }
+
 
   async inputChange(){
     const text = document.getElementsByClassName("input")[0].value
@@ -149,19 +166,29 @@ class App extends React.Component{
   }
 
 
-
+  reset(){
+    this.setState({
+      definition: null,
+      words : null, 
+      word : null,
+      suggested : null,
+      selected : null
+    })
+  }
   render(){
     return (
       <div className="App" >
         <div className="content-div">
           <div class="title-div">
-            Similarnym Finder
+            <div onClick={() => this.reset()} className="title">Similarnyms</div>
+            <div className="subtitle">similar meanings with similar applications</div>
+
           </div>
-          <div>
-            <div className="input-div">
+
+          <div className="input-div">
               <button className="btn btn-primary" onClick={() => this.word()} >Find</button>
               <div className="text-input">
-                <input type='text' className="input form-control" placeholder="Search a word" onInput={ () => this.inputChange()}></input>
+                <input type='text' className="input form-control" placeholder="Search something!" onInput={ () => this.inputChange()}></input>
                 <div className="suggested-div">
                   <ul className="suggested-list"> 
                     {this.state.suggested ? this.state.suggested.map((word,key) => 
@@ -176,9 +203,10 @@ class App extends React.Component{
                 </div>
               </div>
             </div>
-          </div>
+
           <div className="words-div">
-            {this.state.words  && !this.state.loading ? this.state.words.map((word, key) => <div key={key} style={{margin: "10px"}}>{word}</div>) : (this.state.loading ? <div> Loading... </div>: null)}
+            {this.state.word ? <div className="definition-div"><div>{this.state.word}</div><div className="definition">{this.state.definition}</div></div>: null}  
+            {this.state.words  && !this.state.loading ? this.state.words.map((word, key) => <div className="word-syn" onClick={(e) => this.suggested(e)} key={key} style={{margin: "13px"}}>{word}</div>) : (this.state.loading ? <div> Loading... </div>: null)}
           </div>
         </div>     
         <div className="filler-div"></div>
