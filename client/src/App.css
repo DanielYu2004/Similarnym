@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
-
+@import url('https://fonts.googleapis.com/css?family=Poppins:300&display=swap');
 .App {
   display: flex;
   flex-direction: column;
@@ -139,6 +139,8 @@
   font-size: 20px;
   margin-bottom: 60px;
   color: rgb(49, 49, 49);
+  font-family: 'Poppins', sans-serif;
+
 
 }
 
