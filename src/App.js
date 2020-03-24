@@ -17,12 +17,12 @@ class App extends React.Component{
     const node = document.getElementsByClassName("input")[0];
     node.addEventListener("keyup", (event) => {
         if (event.key === "Enter") {
-          if (node.value != ""){
+          if (node.value !== ""){
             this.word()
           }
         }
 
-        if (this.state.suggested.length != 0){
+        if (this.state.suggested.length !== 0){
           if (event.key === "ArrowDown") {
 
             if (this.state.selected === null){
@@ -38,7 +38,7 @@ class App extends React.Component{
               node.value = document.getElementsByClassName("suggested-list")[0].childNodes[this.state.selected].textContent
   
             }
-            else if (this.state.selected == this.state.suggested.length - 1){
+            else if (this.state.selected === this.state.suggested.length - 1){
               this.setState({selected : 0})
               node.value = document.getElementsByClassName("suggested-list")[0].childNodes[this.state.selected].textContent
             }
@@ -82,19 +82,19 @@ class App extends React.Component{
   async word(){
 
     const word = document.getElementsByClassName("input")[0].value
-    if (word != ""){
+    if (word !== ""){
       this.setState({
         suggested: [], 
         loading: true,
         word : null,
         definition: null
       })
-      console.log("sending word:" , word)
-      const url = "https://cors-anywhere.herokuapp.com/https://api.datamuse.com/words?max=70&ml=" + word
+      //console.log("sending word:" , word)
+      const url = "http://cors-anywhere.herokuapp.com/http://api.datamuse.com/words?max=70&ml=" + word
       const response = await fetch(url)
       const data = await response.json()
   
-      console.log("Receieved data:", data)
+      //console.log("Receieved data:", data)
       const results = []
   
       for (var i = 0; i < data.length; i++){
@@ -103,14 +103,14 @@ class App extends React.Component{
 
 
 
-      const responsee = await fetch("https://www.dictionaryapi.com/api/v3/references/collegiate/json/" + word +"?key=7e6d05cf-f2ff-4571-bcdc-c93c05e8a98b")
+      const responsee = await fetch("http://www.dictionaryapi.com/api/v3/references/collegiate/json/" + word +"?key=7e6d05cf-f2ff-4571-bcdc-c93c05e8a98b")
       const dataa = await responsee.json()
-      console.log(dataa)
+      //console.log(dataa)
       
       var definition = "unavailable"
-      if (dataa[0] != undefined){
-        if (dataa[0].shortdef != undefined){
-          var definition = dataa[0].shortdef[0] 
+      if (dataa[0] !== undefined){
+        if (dataa[0].shortdef !== undefined){
+          definition = dataa[0].shortdef[0] 
         }
       }
 
@@ -141,17 +141,17 @@ class App extends React.Component{
 
   async inputChange(){
     const text = document.getElementsByClassName("input")[0].value
-    console.log(text)
-    if (text == ""){
+    //console.log(text)
+    if (text === ""){
       this.setState({
         suggested : [],
         selected : null
       })
     }
     else{
-      const response = await fetch("https://api.datamuse.com/sug?max=8&s=" + text)
+      const response = await fetch("http://api.datamuse.com/sug?max=8&s=" + text)
       const data = await response.json()
-      console.log(data)
+      //console.log(data)
   
       const suggest = []
     
@@ -179,7 +179,7 @@ class App extends React.Component{
     return (
       <div className="App" >
         <div className="content-div">
-          <div class="title-div">
+          <div className="title-div">
             <div onClick={() => this.reset()} className="title">Similarnym</div>
             <div className="subtitle">similar meanings with similar applications</div>
 
@@ -192,7 +192,7 @@ class App extends React.Component{
                 <div className="suggested-div">
                   <ul className="suggested-list"> 
                     {this.state.suggested ? this.state.suggested.map((word,key) => 
-                    {if (key == this.state.suggested.length-1){
+                    {if (key === this.state.suggested.length-1){
                     return <li style={{borderRadius: "0 0 7px 7px"}}key={key}className="suggested-li" onClick={(e) => this.suggested(e)}><div className="li-word">{word}</div></li>
                     }
                     else{
