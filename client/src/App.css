@@ -154,6 +154,23 @@
   }
   .word-syn{
     margin: 9px;
+    font-size: 13px;
+  }
+  .definition{
+    font-size: 11px;
+  }
+  .definition-word{
+    font-size: 20px;
+  }
+  .subtitle{
+    font-size: 16px;
+    margin-bottom: 0px;
+  }
+  .title{
+    font-size: 29px;
+  }
+  .title-div{
+    margin-bottom: 0px;
   }
 }
 

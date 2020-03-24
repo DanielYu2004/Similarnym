@@ -171,7 +171,7 @@ class App extends React.Component{
       definition: null,
       words : null, 
       word : null,
-      suggested : null,
+      suggested : [],
       selected : null
     })
   }
@@ -205,14 +205,13 @@ class App extends React.Component{
             </div>
 
           <div className="words-div">
-            {this.state.word ? <div className="definition-div"><div>{this.state.word}</div><div className="definition">{this.state.definition}</div></div>: null}  
+            {this.state.word ? <div className="definition-div"><div className="definition-word">{this.state.word}</div><div className="definition">{this.state.definition}</div></div>: null}  
             {this.state.words  && !this.state.loading ? this.state.words.map((word, key) => <div className="word-syn" onClick={(e) => this.suggested(e)} key={key}>{word}</div>) : (this.state.loading ? <div> Loading... </div>: null)}
           </div>
         </div>     
         <div className="filler-div"></div>
         <div className="footer-div">
-        Daniel Yu<br></br>
-Developed as a side project
+            Developed by Daniel Yu
         </div>
       </div>
     );
