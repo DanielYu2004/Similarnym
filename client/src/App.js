@@ -13,6 +13,8 @@ class App extends React.Component{
   }
 
   componentDidMount(){
+
+
     const node = document.getElementsByClassName("input")[0];
     node.addEventListener("keyup", (event) => {
         if (event.key === "Enter") {
@@ -20,35 +22,65 @@ class App extends React.Component{
             this.word()
           }
         }
-        if (event.key === "ArrowDown") {
-          if (this.state.selected === null){
-            this.setState({
-              selected : 0
-            })
-            node.value = document.getElementsByClassName("suggested-list")[0].childNodes[this.state.selected].textContent
-          }
-          else if (this.state.selected < this.state.suggested.length - 1){
-            this.setState( (prevState) => {
-              return({selected : prevState.selected + 1})
-            })
-            node.value = document.getElementsByClassName("suggested-list")[0].childNodes[this.state.selected].textContent
 
+        if (this.state.suggested.length != 0){
+          if (event.key === "ArrowDown") {
+
+            if (this.state.selected === null){
+              this.setState({
+                selected : 0
+              })
+              node.value = document.getElementsByClassName("suggested-list")[0].childNodes[this.state.selected].textContent
+            }
+            else if (this.state.selected < this.state.suggested.length - 1){
+              this.setState( (prevState) => {
+                return({selected : prevState.selected + 1})
+              })
+              console.log(this.state.selected)
+              node.value = document.getElementsByClassName("suggested-list")[0].childNodes[this.state.selected].textContent
+  
+            }
+            else if (this.state.selected == this.state.suggested.length - 1){
+              this.setState({selected : 0})
+              node.value = document.getElementsByClassName("suggested-list")[0].childNodes[this.state.selected].textContent
+            }
+          }
+          if (event.key === "ArrowUp"){
+            if (this.state.selected > 0 && this.state.selected < this.state.suggested.length){
+              this.setState((prevState) => {
+                return({selected : prevState.selected - 1})
+              })
+              console.log(this.state.selected)
+              node.value = document.getElementsByClassName("suggested-list")[0].childNodes[this.state.selected].textContent
+            }
+            else if (this.state.suggested.length <= this.state.selected){
+              this.setState({selected : this.state.suggested.length - 2})
+            }
+            else if (this.state.suggested.length > 0){
+              this.setState((prevState) => {
+                return({selected : this.state.suggested.length - 1})
+              })
+              node.value = document.getElementsByClassName("suggested-list")[0].childNodes[this.state.selected].textContent
+
+            }
+          }
+          console.log("selected", this.state.selected)
+          if (this.state.selected !== null){            
+            for (var i = 0; i < this.state.suggested.length; i++){
+              document.getElementsByClassName("suggested-list")[0].childNodes[i].classList.remove("selected");
+              //document.getElementsByClassName("suggested-list")[0].childNodes[i].style.background = "#e4eaf5"
+            }
+            if (this.state.selected < this.state.suggested.length && this.state.selected >= 0){
+              document.getElementsByClassName("suggested-list")[0].childNodes[this.state.selected].classList.add("selected");
+            }
+            else{
+              document.getElementsByClassName("suggested-list")[0].childNodes[this.state.suggested.length - 1].classList.add("selected");
+            }
+
+            //document.getElementsByClassName("suggested-list")[0].childNodes[this.state.selected].style.background = "black"
           }
         }
-        if (event.key === "ArrowUp"){
-          if (this.state.selected > 0){
-            this.setState((prevState) => {
-              return({selected : prevState.selected - 1})
-            })
-            console.log(this.state.selected)
-          }
-          node.value = document.getElementsByClassName("suggested-list")[0].childNodes[this.state.selected].textContent
-
-
-        }
-    });
-    console.log(this.state.selected)
-    
+    });    
   }
 
   async word(){
@@ -56,11 +88,11 @@ class App extends React.Component{
     const word = document.getElementsByClassName("input")[0].value
     if (word != ""){
       this.setState({
-        suggested: null, 
+        suggested: [], 
         loading: true
       })
       console.log("sending word:" , word)
-      const url = "https://cors-anywhere.herokuapp.com/https://api.datamuse.com/words?max=20&ml=" + word
+      const url = "https://cors-anywhere.herokuapp.com/https://api.datamuse.com/words?max=70&ml=" + word
       const response = await fetch(url)
       const data = await response.json()
   
@@ -73,7 +105,7 @@ class App extends React.Component{
 
       this.setState({
         words: results,
-        suggested : null,
+        suggested : [],
         loading : false,
         selected : null
       })
@@ -95,7 +127,8 @@ class App extends React.Component{
     console.log(text)
     if (text == ""){
       this.setState({
-        suggested : null
+        suggested : [],
+        selected : null
       })
     }
     else{
@@ -114,6 +147,9 @@ class App extends React.Component{
       })
     }
   }
+
+
+
   render(){
     return (
       <div className="App" >
